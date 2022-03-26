@@ -59,6 +59,7 @@ const signIn = async (req, res) => {
       process.env.SECRET
     );
     req.session.isAuthenticated = true;
+    req.session.user_id = data[0].user_id;
     res.redirect("/");
   } catch (err) {
     req.flash("err", "email or password incorrect");

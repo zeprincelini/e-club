@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../../partials/_head") %>
+  <body>
+    <%- include("../../partials/_navBar") %>
+    <div class="wrapper">
+      <h2 class="profile-header">My Clubs</h2>
+      <% if(data.length === 0){%>
+      <p>you have not created any club</p>
+      <%}else{%>
+      <div class="grid-wrapper">
+        <% data.map((club) => {%>
+        <div class="grid-item"><%= club.name %></div>
+        <%}) %>
+      </div>
+      <%}%>
+    </div>
+    <%- include("../../partials/_footer") %>
+  </body>
+</html>

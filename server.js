@@ -5,9 +5,8 @@ const path = require("path");
 const session = require("express-session");
 const flash = require("connect-flash");
 const db = require("./db/db");
-const clubRoute = require("./routes/club/club");
+const profileRoute = require("./routes/profile/profile");
 const authRoute = require("./routes/auth/auth");
-const homeRoute = require("./routes/home/index");
 
 const app = express();
 
@@ -25,8 +24,7 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, "/public")));
 app.set("view engine", "ejs");
 
-app.use("/", homeRoute);
-app.use("/club", clubRoute);
+app.use("/", profileRoute);
 app.use("/auth", authRoute);
 
 const port = process.env.PORT || 4000;

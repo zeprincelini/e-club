@@ -1,10 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
 }
 
-body {
-  max-width: 1100px;
-  margin: auto;
+.wrapper {
+  /* max-width: 1100px;
+  margin: auto; */
+  padding: 10px 30px;
+  min-height: calc(100vh - 75px);
 }
 
 .container {
@@ -14,6 +21,7 @@ body {
   justify-content: center;
 }
 
+/* auth views start */
 .sign-in,
 .sign-up {
   width: 400px;
@@ -62,12 +70,126 @@ input:focus {
   border: none;
   margin-top: 25px;
   color: #fff;
+  cursor: pointer;
 }
 
 .form-footer-text {
   color: #1b92af;
   text-decoration: none;
 }
+
+/* auth view end */
+
+/* nav view start */
+.navBar {
+  width: 100%;
+  height: 45px;
+  background: #1b92af;
+  padding: 10px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.nav-links li {
+  list-style: none;
+}
+
+li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* nav view end */
+
+/* create club view start */
+
+.create-club-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-club-header {
+  color: gray;
+  margin: 30px 0px;
+}
+
+.club-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  width: 50%;
+  box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+}
+
+.create-club-button {
+  background-color: #1b92af;
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  margin-top: 25px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.profile-header {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.grid-item {
+  padding: 20px;
+  width: 100%;
+  height: 100px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.62);
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.62);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.62);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* create club view end */
+
+/* footer view start */
+
+.footer {
+  height: 30px;
+  background-color: #1b92af;
+  color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* footer view end */
+
+/* re-usables start */
 
 .error-body {
   background: #eedada;
@@ -77,4 +199,27 @@ input:focus {
 
 .error-text {
   color: #aa7d84;
+}
+
+.success-body {
+  background: #d4edda;
+  padding: 10px;
+  margin-bottom: 25px;
+  width: 50%;
+}
+
+.success-text {
+  color: #155724;
+}
+
+/* re-usables end */
+
+/* responsiveness */
+@media (max-width: 768px) {
+  .club-form {
+    width: 100%;
+  }
+  .success-body {
+    width: 100%;
+  }
 }

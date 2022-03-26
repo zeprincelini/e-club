@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../../partials/_head") %>
+  <body>
+    <%- include("../../partials/_navBar") %>
+    <div class="wrapper">
+      <div class="create-club-container">
+        <h1 class="create-club-header">Create Club</h1>
+        <% if(locals.error){%>
+        <div class="error-body">
+          <span class="error-text"><%= locals.error %></span>
+        </div>
+        <%}else if(locals.success){%>
+        <div class="success-body">
+          <span class="success-text"><%= locals.success %></span>
+        </div>
+        <%}%>
+        <form action="/create-club" method="post" class="club-form">
+          <div class="input-group">
+            <input type="text" placeholder="Club name" name="name" />
+          </div>
+          <button class="create-club-button">Create club</button>
+        </form>
+      </div>
+    </div>
+    <%- include("../../partials/_footer") %>
+  </body>
+</html>

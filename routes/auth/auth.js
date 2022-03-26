@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const controller = require("../../controllers/auth/auth");
-const helper = require("../../helper/token/isAuthenticated");
+const helper = require("../../helper/checkAuth/isAuthenticated");
 
 router.post("/sign-in", controller.signIn);
 router.post("/sign-up", controller.signUp);
