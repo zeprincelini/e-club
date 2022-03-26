@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../../partials/_head") %>
+  <body>
+    <div class="container">
+      <div class="sign-in">
+        <h3 class="sign-in-header">Sign In</h3>
+        <% if(locals.error){%>
+        <div class="error-body">
+          <span class="error-text"><%= locals.error %></span>
+        </div>
+        <%} %>
+        <form action="/auth/sign-in" method="post" class="sign-in-form">
+          <div class="input-group">
+            <label for="email"> Email </label>
+            <input type="email" name="email" required />
+          </div>
+          <div class="input-group">
+            <label for="password"> Password </label>
+            <input type="password" name="password" required />
+          </div>
+          <button class="auth-form-button" type="submit">Sign In</button>
+          <a href="/auth/sign-up" class="form-footer-text"
+            >Don&apos;t have an account? Sign Up</a
+          >
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

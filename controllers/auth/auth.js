@@ -20,13 +20,14 @@ const signUp = async (req, res) => {
     const query =
       "INSERT INTO user_account (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *";
     const values = [firstName, lastName, email, hash];
-    const data = await pool.query(query, values);
-    return res
-      .status(200)
-      .json({ status: "success", data: data.rows })
-      .render("pages/home/index", { token: accessToken });
+    await pool.query(query, values);
+    return res.redirect("/auth/sign-in");
   } catch (err) {
-    return res.status(401).json({ error: err.message });
+    req.flash("err", err.message);
+    return res.render("pages/auth/sign_in", {
+      error: req.flash("err"),
+      title: "sign up",
+    });
   }
 };
 
@@ -37,35 +38,54 @@ const signIn = async (req, res) => {
   try {
     const user = await pool.query(query, value);
     const data = user.rows;
-    if (data[0] === 0) {
-      return res
-        .status(404)
-        .json({ status: "error", message: "email does not exist" });
+    if (data.length === 0) {
+      req.flash("err", "email does not exist");
+      return res.render("pages/auth/sign_in", {
+        error: req.flash("err"),
+        title: "sign in",
+      });
     }
     const isPasswordValid = await bcrypt.compare(password, data[0].password);
     if (!isPasswordValid) {
-      return res
-        .status(401)
-        .json({ status: "error", message: "email or password incorrect" });
+      req.flash("err", "email or password incorrect");
+      return res.render("pages/auth/sign_in", {
+        error: req.flash("err"),
+        title: "sign in",
+      });
     }
     const fullName = [data[0].first_name, data[0].last_name].join(" ");
     const token = jwt.sign(
       { email: data[0].email, name: fullName },
       process.env.SECRET
     );
-    return res.status(200).json({
-      status: "success",
-      message: "sign in successful",
-      accessToken: token,
-    });
+    req.session.isAuthenticated = true;
+    res.redirect("/");
   } catch (err) {
-    return res
-      .status(401)
-      .json({ status: "error", message: "email or password incorrect" });
+    req.flash("err", "email or password incorrect");
+    return res.render("pages/auth/sign_in", {
+      error: req.flash("err"),
+      title: "sign in",
+    });
   }
+};
+
+const signOut = (req, res) => {
+  req.session.isAuthenticated = false;
+  res.redirect("/");
+};
+
+const signInView = (req, res) => {
+  res.render("pages/auth/sign_in", { title: "sign in" });
+};
+
+const signUpView = (req, res) => {
+  res.render("pages/auth/sign_up", { title: "sign up" });
 };
 
 module.exports = {
   signIn,
   signUp,
+  signOut,
+  signInView,
+  signUpView,
 };
