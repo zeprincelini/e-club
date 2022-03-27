@@ -78,6 +78,16 @@ input:focus {
   text-decoration: none;
 }
 
+.auth-error-body {
+  background: #eedada;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.auth-error-text {
+  color: #aa7d84;
+}
+
 /* auth view end */
 
 /* nav view start */
@@ -160,20 +170,96 @@ li a {
 }
 
 .grid-item {
-  padding: 20px;
+  padding: 20px 20px 10px 20px;
   width: 100%;
-  height: 100px;
+  height: 150px;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.62);
   -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.62);
   -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.62);
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  transition: 0.4s ease-in-out;
+}
+
+.grid-item-button {
   cursor: pointer;
+  background-color: #1b92af;
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  margin-top: 25px;
+  color: #fff;
+  width: 100%;
+}
+
+.grid-item:hover {
+  transform: scale(1.06);
+}
+
+/* create club view end */
+
+/* club view start */
+.club-title {
+  color: gray;
+}
+
+.club-container {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* create club view end */
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 40%;
+}
+
+.tab-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+.tab-header-one,
+.tab-header-two {
+  cursor: pointer;
+  padding: 10px;
+}
+
+.tab-header-one:hover,
+.tab-header-two:hover {
+  color: #1b92af;
+}
+
+.tab-two {
+  display: none;
+}
+
+.add-member h3 {
+  color: gray;
+  margin-bottom: 15px;
+}
+
+.add-member-btn {
+  background-color: #1b92af;
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  margin-top: 25px;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+}
+/* club view end */
 
 /* footer view start */
 
@@ -194,7 +280,8 @@ li a {
 .error-body {
   background: #eedada;
   padding: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
+  width: 50%;
 }
 
 .error-text {
@@ -212,6 +299,10 @@ li a {
   color: #155724;
 }
 
+.empty {
+  color: gray;
+}
+
 /* re-usables end */
 
 /* responsiveness */
@@ -219,7 +310,8 @@ li a {
   .club-form {
     width: 100%;
   }
-  .success-body {
+  .success-body,
+  .error-body {
     width: 100%;
   }
 }

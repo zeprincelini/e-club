@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../../partials/_head") %>
+  <body>
+    <%- include("../../partials/_navBar") %>
+    <div class="wrapper">
+      <h1 class="club-title"><%= locals.data.name %></h1>
+      <div class="club-container">
+        <div class="tab">
+          <div class="tab-header">
+            <p class="tab-header-one">View member</p>
+            <p class="tab-header-two">Add members</p>
+          </div>
+          <div class="tab-one">
+            <% if(members.length > 0){ members.forEach((member, key) => {%>
+            <table>
+              <thead>
+                <tr>
+                  <th>id</th>
+                  <th>name</th>
+                  <th>email</th>
+                  <th>action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><%= key %></td>
+                  <td><%= member.name %></td>
+                  <td><%= member.email %></td>
+                  <td><button>remove</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <%}) }else{%>
+            <p class="empty">no members added!</p>
+            <%} %>
+          </div>
+          <div class="tab-two">
+            <div class="add-member">
+              <h3>Add member</h3>
+              <form action="/club/<%= id %>" method="post">
+                <div class="input-group">
+                  <input type="email" name="email" placeholder="enter email" />
+                </div>
+                <button class="add-member-btn">add user</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include("../../partials/_footer") %>
+  </body>
+</html>

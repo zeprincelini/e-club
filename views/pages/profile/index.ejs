@@ -9,8 +9,13 @@
       <p>you have not created any club</p>
       <%}else{%>
       <div class="grid-wrapper">
-        <% data.map((club) => {%>
-        <div class="grid-item"><%= club.name %></div>
+        <% data.forEach((club) => {%>
+        <div class="grid-item">
+          <p><%= club.name %></p>
+          <a href="club/<%= club.club_id %>"
+            ><button class="grid-item-button">view club</button></a
+          >
+        </div>
         <%}) %>
       </div>
       <%}%>

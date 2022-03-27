@@ -7,8 +7,8 @@
         <div class="sign-up">
           <h3 class="sign-up-header">Sign Up</h3>
           <% if(locals.error){%>
-          <div class="error-body">
-            <span class="error-text"><%= locals.error %></span>
+          <div class="auth-error-body">
+            <span class="auth-error-text"><%= locals.error %></span>
           </div>
           <%} %>
           <form action="/auth/sign-up" method="post" class="sign-up-form">
