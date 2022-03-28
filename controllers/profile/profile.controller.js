@@ -52,15 +52,21 @@ const getClubView = async (req, res) => {
   const club_id = req.params.id;
   const query = "SELECT * FROM club WHERE club_id = ($1)";
   const value = [club_id];
+  const query_club_members = `select user_account.user_id, first_name, last_name, email from user_account join users_club on users_club.user_id = user_account.user_id WHERE users_club.club_id = ($1)
+  `;
+  const value_members = [club_id];
   try {
     const data = await pool.query(query, value);
+    const members = await pool.query(query_club_members, value_members);
     res.render("pages/profile/club", {
       title: "club",
       data: data.rows[0],
       id: club_id,
-      members: [],
+      members: members.rows,
+      msg: req.flash("info"),
     });
   } catch (err) {
+    console.log(err.message);
     req.flash("error", "failed to retrieve club");
     return res.render("pages/profile/club", {
       error: req.flash("error"),
@@ -72,6 +78,11 @@ const getClubView = async (req, res) => {
 const addMember = async (req, res) => {
   const { email } = req.body;
   const { club_id } = req.params;
+  if (!email) {
+    req.flash("info", "enter a valid email");
+    res.locals.error = req.flash();
+    return res.redirect(`/club/${club_id}`);
+  }
   const emailQuery = "SELECT * FROM user_Account WHERE email = ($1)";
   const emailValue = [email];
   const query = "INSERT INTO users_club (user_id, club_id) VALUES ($1, $2)";
@@ -80,14 +91,32 @@ const addMember = async (req, res) => {
     const userId = user.rows[0];
     const value = [userId.user_id, club_id];
     await pool.query(query, value);
+    req.flash("info", "member added successfully");
+    res.locals.success = req.flash();
     return res.redirect(`/club/${club_id}`);
   } catch (err) {
-    req.flash("error", "failed to add member");
-    return res.render("pages/profile/club", {
-      error: req.flash("error"),
-      title: "club",
-    });
+    req.flash("info", "failed to add member");
+    res.locals.error = req.flash();
+    return res.redirect(`/club/${club_id}`);
   }
+};
+
+const removeMember = async (req, res) => {
+  const { club_id, member_id } = req.params;
+  const query = "DELETE FROM users_club WHERE user_id = ($1)";
+  const value = [member_id];
+  try {
+    await pool.query(query, value);
+    return res.redirect(`/club/${club_id}`);
+  } catch (err) {
+    return res.redirect(`/club/${club_id}`);
+  }
+};
+
+getActivityView = (req, res) => {
+  // req.flash("some", "something is amiss");
+  // res.locals.test = req.flash();
+  res.render("pages/profile/activity", { title: "activity" });
 };
 
 module.exports = {
@@ -96,4 +125,6 @@ module.exports = {
   createClubView,
   getClubView,
   addMember,
+  removeMember,
+  getActivityView,
 };

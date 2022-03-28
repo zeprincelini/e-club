@@ -4,16 +4,25 @@
   <body>
     <%- include("../../partials/_navBar") %>
     <div class="wrapper">
-      <h1 class="club-title"><%= locals.data.name %></h1>
+      <h1 class="club-title"><%= data.name %></h1>
       <div class="club-container">
+        <% if(typeof locals.success !== 'undefined'){%>
+        <div class="success-body">
+          <div class="success-text"><%= success.info %></div>
+        </div>
+        <%} %> <% if(locals.error){%>
+        <div class="error-body">
+          <div class="error-text"><%= error.info %></div>
+        </div>
+        <%} %>
         <div class="tab">
           <div class="tab-header">
             <p class="tab-header-one">View member</p>
             <p class="tab-header-two">Add members</p>
           </div>
           <div class="tab-one">
-            <% if(members.length > 0){ members.forEach((member, key) => {%>
-            <table>
+            <% if(members.length > 0){%>
+            <table class="table">
               <thead>
                 <tr>
                   <th>id</th>
@@ -23,15 +32,27 @@
                 </tr>
               </thead>
               <tbody>
+                <% members.forEach((member, key) => {%>
                 <tr>
-                  <td><%= key %></td>
-                  <td><%= member.name %></td>
+                  <td><%= key + 1 %></td>
+                  <td>
+                    <%= [member.first_name, member.last_name].join(' ') %>
+                  </td>
                   <td><%= member.email %></td>
-                  <td><button>remove</button></td>
+                  <td>
+                    <form
+                      class="delete"
+                      action="/club/<%= id %>/<%= member.user_id %>?_method=DELETE"
+                      method="POST"
+                    >
+                      <button>remove</button>
+                    </form>
+                  </td>
                 </tr>
+                <%})%>
               </tbody>
             </table>
-            <%}) }else{%>
+            <%}else{%>
             <p class="empty">no members added!</p>
             <%} %>
           </div>

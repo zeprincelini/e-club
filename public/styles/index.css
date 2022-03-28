@@ -210,6 +210,7 @@ li a {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -240,6 +241,30 @@ li a {
   color: #1b92af;
 }
 
+.table {
+  width: 100%;
+  text-align: center;
+}
+
+td,
+tr,
+th {
+  padding: 5px 10px;
+}
+
+a.delete {
+  text-decoration: none;
+}
+
+.delete button {
+  color: #fff;
+  padding: 5px 10px;
+  background: #920000;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
 .tab-two {
   display: none;
 }
@@ -260,6 +285,12 @@ li a {
   width: 100%;
 }
 /* club view end */
+
+/*chart view start*/
+.chart-container {
+  margin-top: 30px;
+}
+/*chart view end*/
 
 /* footer view start */
 

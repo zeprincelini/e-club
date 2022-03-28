@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const path = require("path");
 const session = require("express-session");
 const flash = require("connect-flash");
+const methodOverride = require("method-override");
+const cors = require("cors");
 const db = require("./db/db");
 const profileRoute = require("./routes/profile/profile");
 const authRoute = require("./routes/auth/auth");
@@ -12,6 +14,8 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+app.use(methodOverride("_method"));
 app.use(morgan("dev"));
 app.use(
   session({

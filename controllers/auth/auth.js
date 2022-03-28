@@ -53,11 +53,11 @@ const signIn = async (req, res) => {
         title: "sign in",
       });
     }
-    const fullName = [data[0].first_name, data[0].last_name].join(" ");
-    const token = jwt.sign(
-      { email: data[0].email, name: fullName },
-      process.env.SECRET
-    );
+    // const fullName = [data[0].first_name, data[0].last_name].join(" ");
+    // const token = jwt.sign(
+    //   { email: data[0].email, name: fullName },
+    //   process.env.SECRET
+    // );
     req.session.isAuthenticated = true;
     req.session.user_id = data[0].user_id;
     res.redirect("/");
