@@ -241,9 +241,14 @@ li a {
   color: #1b92af;
 }
 
+.tab-one {
+  overflow-x: auto;
+}
+
 .table {
   width: 100%;
   text-align: left;
+  white-space: nowrap;
   /* border: 1px solid gray; */
 }
 
