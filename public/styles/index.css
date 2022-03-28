@@ -310,6 +310,34 @@ a.delete {
 }
 /*chart view end*/
 
+/*invite view start*/
+.club-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.invite-accept {
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  background-color: #369143;
+  color: #fff;
+  width: 100%;
+  cursor: pointer;
+}
+
+.invite-decline {
+  padding: 10px;
+  border-radius: 7px;
+  border: none;
+  background-color: #b42525;
+  color: #fff;
+  cursor: pointer;
+}
+/*invite view end*/
+
 /* footer view start */
 
 .footer {

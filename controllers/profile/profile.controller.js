@@ -58,6 +58,7 @@ const getClubView = async (req, res) => {
   JOIN users_club 
   ON users_club.user_id = user_account.user_id 
   WHERE users_club.club_id = ($1)
+  AND users_club.status = 'joined'
   `;
   const value_members = [club_id];
   try {
@@ -135,6 +136,27 @@ const clubJoined = async (req, res) => {
   }
 };
 
+const inviteView = async (req, res) => {
+  const id = req.session.user_id;
+  const query = `
+  SELECT name FROM club 
+  JOIN users_club ON club.club_id = users_club.club_id 
+  WHERE users_club.user_id = ($1) 
+  AND status = 'pending'
+  `;
+  const value = [id];
+  try {
+    const data = await pool.query(query, value);
+    return res.render("pages/profile/invite", {
+      title: "invites",
+      data: data.rows,
+    });
+  } catch (err) {
+    req.flash("error", "failed to retrieve invites");
+    res.redirect("/");
+  }
+};
+
 module.exports = {
   createClub,
   getUsersClubs,
@@ -144,4 +166,5 @@ module.exports = {
   removeMember,
   getActivityView,
   clubJoined,
+  inviteView,
 };

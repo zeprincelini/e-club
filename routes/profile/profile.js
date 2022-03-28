@@ -13,5 +13,6 @@ router.delete(
   controller.removeMember
 );
 router.get("/", helper.isAuthenticated, controller.getUsersClubs);
+router.get("/club-invites", helper.isAuthenticated, controller.inviteView);
 
 module.exports = router;

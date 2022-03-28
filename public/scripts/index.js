@@ -45,7 +45,7 @@ window.onload = function () {
       labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
       datasets: [
         {
-          label: "members joined",
+          label: "members",
           data: [12, 19, 3, 5, 2, 3],
           backgroundColor: [
             "rgba(255, 99, 132, 0.2)",
