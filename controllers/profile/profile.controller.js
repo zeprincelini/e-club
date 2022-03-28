@@ -112,8 +112,27 @@ const removeMember = async (req, res) => {
   }
 };
 
-getActivityView = (req, res) => {
+const getActivityView = (req, res) => {
   res.render("pages/profile/activity", { title: "activity" });
+};
+
+const clubJoined = async (req, res) => {
+  const query = `
+  SELECT name from club 
+  JOIN users_club on users_club.user_id = ($1) 
+  WHERE club.club_id = users_club.club_id;
+  `;
+  const value = [req.session.user_id];
+  try {
+    const data = await pool.query(query, value);
+    res.render("pages/profile/club_joined", {
+      title: "joined clubs",
+      data: data.rows,
+    });
+  } catch (err) {
+    req.flash("error", "failed to retrieve clubs");
+    res.redirect("/");
+  }
 };
 
 module.exports = {
@@ -124,4 +143,5 @@ module.exports = {
   addMember,
   removeMember,
   getActivityView,
+  clubJoined,
 };

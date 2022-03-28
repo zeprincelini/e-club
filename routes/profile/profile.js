@@ -4,7 +4,7 @@ const helper = require("../../helper/checkAuth/isAuthenticated");
 
 router.post("/create-club", controller.createClub);
 router.get("/create-club", helper.isAuthenticated, controller.createClubView);
-router.get("/activity", helper.isAuthenticated, controller.getActivityView);
+router.get("/member-club", helper.isAuthenticated, controller.clubJoined);
 router.get("/club/:id", helper.isAuthenticated, controller.getClubView);
 router.post("/club/:club_id", helper.isAuthenticated, controller.addMember);
 router.delete(

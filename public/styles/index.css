@@ -231,13 +231,15 @@ li a {
 }
 
 .tab-header-one,
-.tab-header-two {
+.tab-header-two,
+.tab-header-three {
   cursor: pointer;
   padding: 10px;
 }
 
 .tab-header-one:hover,
-.tab-header-two:hover {
+.tab-header-two:hover,
+.tab-header-three:hover {
   color: #1b92af;
 }
 
@@ -280,7 +282,8 @@ a.delete {
   cursor: pointer;
 }
 
-.tab-two {
+.tab-two,
+.tab-three {
   display: none;
 }
 
@@ -353,6 +356,15 @@ a.delete {
 
 /* responsiveness */
 @media (max-width: 768px) {
+  .navBar {
+    padding: 10px;
+  }
+  .nav-links {
+    gap: 8px;
+  }
+  .club-title {
+    margin: 15px 0px;
+  }
   .club-form {
     width: 100%;
   }

@@ -19,6 +19,7 @@
           <div class="tab-header">
             <p class="tab-header-one">View member</p>
             <p class="tab-header-two">Add members</p>
+            <p class="tab-header-three">Members activity</p>
           </div>
           <div class="tab-one">
             <% if(members.length > 0){%>
@@ -28,6 +29,7 @@
                   <th>id</th>
                   <th>name</th>
                   <th>email</th>
+                  <th>joined</th>
                   <th>action</th>
                 </tr>
               </thead>
@@ -39,6 +41,7 @@
                     <%= [member.first_name, member.last_name].join(' ') %>
                   </td>
                   <td><%= member.email %></td>
+                  <!-- <td><%= member.date_joined %></td> -->
                   <td>
                     <form
                       class="delete"
@@ -65,6 +68,11 @@
                 </div>
                 <button class="add-member-btn">add user</button>
               </form>
+            </div>
+          </div>
+          <div class="tab-three">
+            <div class="chart-container">
+              <canvas id="myChart" width="400" height="auto"></canvas>
             </div>
           </div>
         </div>

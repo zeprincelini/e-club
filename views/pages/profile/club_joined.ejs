@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../../partials/_head") %>
+  <body>
+    <%- include("../../partials/_navBar") %>
+    <div class="wrapper">
+      <% if(locals.message.error){%>
+      <div class="error-body">
+        <div class="error-text"><%= message.error %></div>
+      </div>
+      <%} %>
+      <div class="joined-clubs-container">
+        <h2 class="profile-header">Joined Clubs</h2>
+        <% if(data.length > 0){ data.forEach((club) => {%>
+        <div class="grid-wrapper">
+          <div class="grid-item"><%= club.name %></div>
+        </div>
+        <%})}else{%>
+        <p class="empty">you haven&apos;t joined any clubs</p>
+        <%} %>
+      </div>
+    </div>
+    <%- include("../../partials/_footer") %>
+  </body>
+</html>
