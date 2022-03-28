@@ -8,22 +8,36 @@
       <div class="error-body">
         <div class="error-text"><%= message.error %></div>
       </div>
+      <%} %> <% if(locals.message.success){%>
+      <div class="success-body">
+        <div class="success-text"><%= message.success %></div>
+      </div>
       <%} %>
       <div class="invite-container">
         <h2 class="profile-header">Invites</h2>
-        <% if(data.length > 0){ data.forEach((club) => {%>
         <div class="grid-wrapper">
+          <% if(data.length > 0){ data.forEach((club) => {%>
           <div class="grid-item">
             <div class="club-name"><%= club.name %></div>
             <div class="club-actions">
-              <a href=""><button class="invite-accept">accept</button></a>
-              <a href=""><button class="invite-decline">decline</button></a>
+              <form
+                action="/invite-accept/<%= club.club_id %>?_method=PATCH"
+                method="POST"
+              >
+                <button type="submit" class="invite-accept">accept</button>
+              </form>
+              <form
+                action="/invite-decline/<%= club.club_id %>?_method=DELETE"
+                method="POST"
+              >
+                <button type="submit" class="invite-decline">decline</button>
+              </form>
             </div>
           </div>
+          <%})}else{%>
+          <p class="empty">no invites</p>
+          <%} %>
         </div>
-        <%})}else{%>
-        <p class="empty">no invites</p>
-        <%} %>
       </div>
     </div>
     <%- include("../../partials/_footer") %>

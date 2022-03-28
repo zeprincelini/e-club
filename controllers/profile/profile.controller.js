@@ -91,10 +91,10 @@ const addMember = async (req, res) => {
     const userId = user.rows[0];
     const value = [userId.user_id, club_id];
     await pool.query(query, value);
-    req.flash("success", "member added successfully");
+    req.flash("success", "member invitation sent ");
     return res.redirect(`/club/${club_id}`);
   } catch (err) {
-    req.flash("error", "failed to add member");
+    req.flash("error", "failed to invite member");
     return res.redirect(`/club/${club_id}`);
   }
 };
@@ -139,7 +139,7 @@ const clubJoined = async (req, res) => {
 const inviteView = async (req, res) => {
   const id = req.session.user_id;
   const query = `
-  SELECT name FROM club 
+  SELECT name, club.club_id FROM club 
   JOIN users_club ON club.club_id = users_club.club_id 
   WHERE users_club.user_id = ($1) 
   AND status = 'pending'
@@ -157,6 +157,46 @@ const inviteView = async (req, res) => {
   }
 };
 
+const acceptInvite = async (req, res) => {
+  const { clubId } = req.params;
+  const userId = req.session.user_id;
+  const query = `
+    UPDATE users_club
+    SET status = 'joined'
+    WHERE user_id = ($1)
+    AND club_id = ($2)
+  `;
+  const value = [userId, clubId];
+  try {
+    await pool.query(query, value);
+    req.flash("success", "invite accepted");
+    return res.redirect("/club-invites");
+  } catch (err) {
+    req.flash("error", "failed to accept invite");
+    return res.redirect(`/club-invites`);
+  }
+};
+
+const declineInvite = async (req, res) => {
+  const { clubId } = req.params;
+  const userId = req.session.user_id;
+  const query = `
+    DELETE FROM users_club
+    WHERE user_id = ($1)
+    AND club_id = ($2)
+  `;
+  const value = [userId, clubId];
+  try {
+    await pool.query(query, value);
+    req.flash("success", "invite declined");
+    return res.redirect("/club-invites");
+  } catch (err) {
+    console.log(err.message);
+    req.flash("error", "failed to accept invite");
+    return res.redirect(`/club-invites`);
+  }
+};
+
 module.exports = {
   createClub,
   getUsersClubs,
@@ -167,4 +207,6 @@ module.exports = {
   getActivityView,
   clubJoined,
   inviteView,
+  acceptInvite,
+  declineInvite,
 };
