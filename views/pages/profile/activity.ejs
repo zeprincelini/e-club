@@ -4,11 +4,6 @@
   <body>
     <%- include("../../partials/_navBar") %>
     <div class="wrapper">
-      <% if(locals.success){%>
-      <div class="error-body">
-        <div class="error-text"><%= locals.success.info %></div>
-      </div>
-      <%} %>
       <div class="chart-container">
         <canvas id="myChart" width="400" height="auto"></canvas>
       </div>

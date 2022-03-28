@@ -6,13 +6,13 @@
     <div class="wrapper">
       <h1 class="club-title"><%= data.name %></h1>
       <div class="club-container">
-        <% if(typeof locals.success !== 'undefined'){%>
+        <% if(locals.message.success){%>
         <div class="success-body">
-          <div class="success-text"><%= success.info %></div>
+          <div class="success-text"><%= message.success %></div>
         </div>
-        <%} %> <% if(locals.error){%>
+        <%} %> <% if(locals.message.error){%>
         <div class="error-body">
-          <div class="error-text"><%= error.info %></div>
+          <div class="error-text"><%= message.error %></div>
         </div>
         <%} %>
         <div class="tab">

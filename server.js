@@ -28,6 +28,10 @@ app.use(flash());
 app.use(express.static(path.join(__dirname, "/public")));
 app.set("view engine", "ejs");
 
+app.use((req, res, next) => {
+  res.locals.message = req.flash();
+  next();
+});
 app.use("/", profileRoute);
 app.use("/auth", authRoute);
 

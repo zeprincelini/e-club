@@ -219,7 +219,7 @@ li a {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 40%;
+  width: 50%;
 }
 
 .tab-header {
@@ -243,13 +243,23 @@ li a {
 
 .table {
   width: 100%;
-  text-align: center;
+  text-align: left;
+  /* border: 1px solid gray; */
 }
 
 td,
 tr,
 th {
   padding: 5px 10px;
+}
+
+/* tr:nth-child(even) {
+  background-color: #c8c8c8;
+} */
+
+th {
+  color: gray;
+  text-transform: capitalize;
 }
 
 a.delete {
@@ -343,6 +353,9 @@ a.delete {
   }
   .success-body,
   .error-body {
+    width: 100%;
+  }
+  .tab {
     width: 100%;
   }
 }

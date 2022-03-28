@@ -52,7 +52,12 @@ const getClubView = async (req, res) => {
   const club_id = req.params.id;
   const query = "SELECT * FROM club WHERE club_id = ($1)";
   const value = [club_id];
-  const query_club_members = `select user_account.user_id, first_name, last_name, email from user_account join users_club on users_club.user_id = user_account.user_id WHERE users_club.club_id = ($1)
+  const query_club_members = `
+  SELECT user_account.user_id, first_name, last_name, email
+  FROM user_account 
+  JOIN users_club 
+  ON users_club.user_id = user_account.user_id 
+  WHERE users_club.club_id = ($1)
   `;
   const value_members = [club_id];
   try {
@@ -63,15 +68,10 @@ const getClubView = async (req, res) => {
       data: data.rows[0],
       id: club_id,
       members: members.rows,
-      msg: req.flash("info"),
     });
   } catch (err) {
-    console.log(err.message);
     req.flash("error", "failed to retrieve club");
-    return res.render("pages/profile/club", {
-      error: req.flash("error"),
-      title: "club",
-    });
+    return res.redirect(`/club/${club_id}`);
   }
 };
 
@@ -79,8 +79,7 @@ const addMember = async (req, res) => {
   const { email } = req.body;
   const { club_id } = req.params;
   if (!email) {
-    req.flash("info", "enter a valid email");
-    res.locals.error = req.flash();
+    req.flash("error", "enter a valid email");
     return res.redirect(`/club/${club_id}`);
   }
   const emailQuery = "SELECT * FROM user_Account WHERE email = ($1)";
@@ -91,12 +90,10 @@ const addMember = async (req, res) => {
     const userId = user.rows[0];
     const value = [userId.user_id, club_id];
     await pool.query(query, value);
-    req.flash("info", "member added successfully");
-    res.locals.success = req.flash();
+    req.flash("success", "member added successfully");
     return res.redirect(`/club/${club_id}`);
   } catch (err) {
-    req.flash("info", "failed to add member");
-    res.locals.error = req.flash();
+    req.flash("error", "failed to add member");
     return res.redirect(`/club/${club_id}`);
   }
 };
@@ -107,15 +104,15 @@ const removeMember = async (req, res) => {
   const value = [member_id];
   try {
     await pool.query(query, value);
+    req.flash("success", "member removed successfully");
     return res.redirect(`/club/${club_id}`);
   } catch (err) {
+    req.flash("error", "failed to remove member");
     return res.redirect(`/club/${club_id}`);
   }
 };
 
 getActivityView = (req, res) => {
-  // req.flash("some", "something is amiss");
-  // res.locals.test = req.flash();
   res.render("pages/profile/activity", { title: "activity" });
 };
 
