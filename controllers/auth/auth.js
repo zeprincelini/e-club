@@ -8,14 +8,16 @@ const signUp = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
     if (!hash) {
-      return res.status(403).json({ error: "error creating account" });
+      req.flash("error", "failed to sign up");
+      return res.redirect("/auth/sign-up");
     }
     const checkEmail = await pool.query(
       "SELECT * FROM user_account WHERE email = ($1)",
       [email]
     );
     if (checkEmail.rows.length !== 0) {
-      return res.status(401).json({ error: "email already exists" });
+      req.flash("error", "Email already exists");
+      return res.redirect("/auth/sign-up");
     }
     const query =
       "INSERT INTO user_account (first_name, last_name, email, password) VALUES ($1, $2, $3, $4) RETURNING *";
@@ -23,11 +25,8 @@ const signUp = async (req, res) => {
     await pool.query(query, values);
     return res.redirect("/auth/sign-in");
   } catch (err) {
-    req.flash("err", err.message);
-    return res.render("pages/auth/sign_in", {
-      error: req.flash("err"),
-      title: "sign up",
-    });
+    req.flash("error", "failed to sign up");
+    return res.redirect("/auth/sign-up");
   }
 };
 
@@ -39,19 +38,13 @@ const signIn = async (req, res) => {
     const user = await pool.query(query, value);
     const data = user.rows;
     if (data.length === 0) {
-      req.flash("err", "email does not exist");
-      return res.render("pages/auth/sign_in", {
-        error: req.flash("err"),
-        title: "sign in",
-      });
+      req.flash("error", "email does not exist");
+      return res.redirect("/auth/sign-in");
     }
     const isPasswordValid = await bcrypt.compare(password, data[0].password);
     if (!isPasswordValid) {
-      req.flash("err", "email or password incorrect");
-      return res.render("pages/auth/sign_in", {
-        error: req.flash("err"),
-        title: "sign in",
-      });
+      req.flash("error", "email or password incorrect");
+      return res.redirect("/auth/sign-in");
     }
     // const fullName = [data[0].first_name, data[0].last_name].join(" ");
     // const token = jwt.sign(
@@ -62,11 +55,8 @@ const signIn = async (req, res) => {
     req.session.user_id = data[0].user_id;
     res.redirect("/");
   } catch (err) {
-    req.flash("err", "email or password incorrect");
-    return res.render("pages/auth/sign_in", {
-      error: req.flash("err"),
-      title: "sign in",
-    });
+    req.flash("error", "email or password incorrect");
+    return res.redirect("/auth/sign-in");
   }
 };
 

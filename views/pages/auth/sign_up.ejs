@@ -5,10 +5,10 @@
     <div class="wrapper">
       <div class="container">
         <div class="sign-up">
-          <h3 class="sign-up-header">Sign Up</h3>
-          <% if(locals.error){%>
+          <h3 class="sign-up-header">E-Club</h3>
+          <% if(locals.message.error){%>
           <div class="auth-error-body">
-            <span class="auth-error-text"><%= locals.error %></span>
+            <span class="auth-error-text"><%= message.error %></span>
           </div>
           <%} %>
           <form action="/auth/sign-up" method="post" class="sign-up-form">
