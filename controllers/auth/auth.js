@@ -25,7 +25,7 @@ const signUp = async (req, res) => {
     await pool.query(query, values);
     return res.redirect("/auth/sign-in");
   } catch (err) {
-    req.flash("error", "failed to sign up");
+    req.flash("error", err.message);
     return res.redirect("/auth/sign-up");
   }
 };
