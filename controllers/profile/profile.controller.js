@@ -53,7 +53,7 @@ const getClubView = async (req, res) => {
   const query = "SELECT * FROM club WHERE club_id = ($1)";
   const value = [club_id];
   const query_club_members = `
-  SELECT user_account.user_id, first_name, last_name, email
+  SELECT user_account.user_id, first_name, last_name, email, activity
   FROM user_account 
   JOIN users_club 
   ON users_club.user_id = user_account.user_id 
@@ -160,13 +160,14 @@ const inviteView = async (req, res) => {
 const acceptInvite = async (req, res) => {
   const { clubId } = req.params;
   const userId = req.session.user_id;
+  const randomLog = Math.floor(Math.random() * 31);
   const query = `
     UPDATE users_club
-    SET status = 'joined'
+    SET status = 'joined', activity = ($3)
     WHERE user_id = ($1)
     AND club_id = ($2)
   `;
-  const value = [userId, clubId];
+  const value = [userId, clubId, randomLog];
   try {
     await pool.query(query, value);
     req.flash("success", "invite accepted");
@@ -191,8 +192,7 @@ const declineInvite = async (req, res) => {
     req.flash("success", "invite declined");
     return res.redirect("/club-invites");
   } catch (err) {
-    console.log(err.message);
-    req.flash("error", "failed to accept invite");
+    req.flash("error", "failed to decline invite");
     return res.redirect(`/club-invites`);
   }
 };

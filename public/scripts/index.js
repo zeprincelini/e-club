@@ -18,61 +18,28 @@ window.onload = function () {
   const tab_two = document.querySelector(".tab-two");
   const tab_three = document.querySelector(".tab-three");
 
-  tab_header_one.addEventListener("click", () => {
+  tab_header_one?.addEventListener("click", () => {
     tab_one.style.display = "block";
     tab_two.style.display = "none";
     tab_three.style.display = "none";
   });
 
-  tab_header_two.addEventListener("click", () => {
+  tab_header_two?.addEventListener("click", () => {
     tab_two.style.display = "block";
     tab_one.style.display = "none";
     tab_three.style.display = "none";
   });
 
-  tab_header_three.addEventListener("click", () => {
+  tab_header_three?.addEventListener("click", () => {
     tab_three.style.display = "block";
     tab_one.style.display = "none";
     tab_two.style.display = "none";
   });
 
-  //chart
-
-  const ctx = document.getElementById("myChart").getContext("2d");
-  const myChart = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [
-        {
-          label: "members",
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            "rgba(255, 99, 132, 0.2)",
-            "rgba(54, 162, 235, 0.2)",
-            "rgba(255, 206, 86, 0.2)",
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-            "rgba(255, 159, 64, 0.2)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-            "rgba(75, 192, 192, 1)",
-            "rgba(153, 102, 255, 1)",
-            "rgba(255, 159, 64, 1)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
+  //sidebar
+  const sidebar = document.querySelector(".sidebar");
+  const trigger = document.querySelector(".menu");
+  trigger.addEventListener("click", () => {
+    sidebar.classList.toggle("opened");
   });
 };

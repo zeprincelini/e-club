@@ -124,6 +124,46 @@ li a {
 
 /* nav view end */
 
+/*sidebar view start*/
+/* .sidebar-overlay {
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+} */
+.sidebar {
+  width: 50%;
+  background: #fff;
+  height: 100%;
+  position: fixed;
+  z-index: 2;
+  transform: translateX(-1000px);
+  transition: 0.3s ease-in-out;
+}
+
+.sidebar.opened {
+  transform: translateX(0px);
+}
+
+.sidebar-links {
+  margin-top: 10px;
+}
+
+.sidebar-links li {
+  padding: 15px 0px 15px 20px;
+}
+
+.sidebar-links li a {
+  color: #1b92af;
+}
+
+.menu {
+  cursor: pointer;
+  color: #fff;
+  font-size: 35px;
+  display: none;
+}
+/*sidebar view end*/
+
 /* create club view start */
 
 .create-club-container {
@@ -394,7 +434,10 @@ a.delete {
     padding: 10px;
   }
   .nav-links {
-    gap: 8px;
+    display: none;
+  }
+  .menu {
+    display: block;
   }
   .club-title {
     margin: 15px 0px;
